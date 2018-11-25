@@ -25,6 +25,36 @@ Route::get('/register', function () {
     return view('register');
 });
 
+/*** Le projet ***/
+Route::get('projet',[
+  'as' => 'projet', 
+  'uses' => 'ProjetController@index'
+]);
+Route::get('projet/{id}',[
+  'as' => 'showprojet', 
+  'uses' => 'ProjetController@show'
+]);
+Route::get('projet/create',[
+  'as' => 'create', 
+  'uses' => 'ProjetController@create'
+]);
+Route::post('projet', ['uses' => 'ProjetController@store', 'as' => 'storeprojet']);
+Route::post('projet', ['uses' => 'ProjetController@destroy', 'as' => 'deleteprojet']);
+/*** La maison ***/
+Route::get('maison',[
+  'as' => 'maison', 
+  'uses' => 'MaisonController@index'
+]);
+Route::get('maison/{id}',[
+  'as' => 'show', 
+  'uses' => 'MaisonController@show'
+]);
+Route::get('maison/create',[
+  'as' => 'creationMaison', 
+  'uses' => 'MaisonController@create'
+]);
+Route::post('maison', ['uses' => 'MaisonController@store', 'as' => 'storeMaison']);
+/*** Le devis ***/
 Route::get('devis',[
   'as' => 'devis', 
   'uses' => 'DevisController@index'
@@ -38,3 +68,4 @@ Route::get('devis/create',[
   'uses' => 'DevisController@create'
 ]);
 Route::post('devis', ['uses' => 'DevisController@store', 'as' => 'storeDevis']);
+

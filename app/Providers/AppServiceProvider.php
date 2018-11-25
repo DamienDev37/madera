@@ -24,8 +24,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-        'App\Repositories\DevisRepositoryInterface', 
-        'App\Repositories\DevisRepository'
+        'App\Repositories\DevisRepository',
+        'App\Repositories\MaisonRepository',
+        'App\Repositories\ProjetRepository',
+        'App\Repositories\ResourceRepository'
     );
     }
 }
