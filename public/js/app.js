@@ -43,27 +43,23 @@ $(document).ready(function(){
     $('[name=gamme]').on('change',function(){
          
     });
-    $('[name=createDevisButton]').on('click',function(){
-        createDevis(); 
+    $('[name=addSectionProduct]').on('click',function(e){
+      e.preventDefault();
+      var copie = $('.cardProduct:first').clone();
+      copie.appendTo('[name=wrapSectionProducts]');
+
     });
-    function createDevis(){
-        var nomclient=$('[name=nomclient]').val();
-        var projet=$('[name=projet]').val();
-        var arrProducts = [];
-        $('[name=products]').each(function(index){
-              arrProducts.push($(this).val());
-        });
-          $.ajax({
-                url:"/devis/store",
-                type:"POST",
-                dataType:'json',
-                data: {nomclient:nomclient,projet:projet,arrProducts:arrProducts},
-                success: function(data){
-                    console.log("success <br/>"+data)
-                },
-                error: function(data) { 
-                    console.log("Fail <br/>"+data)
-                }
-          });
-    }
+    $('[name=addMontantProduct]').on('click',function(e){
+      e.preventDefault();
+      var copie = $('.cardProduct:first').clone();
+      copie.appendTo('[name=wrapMontantProducts]');
+
+    });
+    $('[name=addRempliProduct]').on('click',function(e){
+      e.preventDefault();
+      var copie = $('.cardProduct:first').clone();
+      copie.appendTo('[name=wrapRempliProducts]');
+
+    });
+
 });

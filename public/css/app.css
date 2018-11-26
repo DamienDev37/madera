@@ -373,3 +373,8 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+.card {
+  max-width: 390px;
+  min-width: 320px;
+}

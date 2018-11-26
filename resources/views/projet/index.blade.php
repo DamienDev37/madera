@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="col-12">
-	<a href="<?=url('/devis/create');?>" class="btn btn-success">Ajouter un projet</a>
+  {!! link_to_route('projet.create', 'Ajouter un projet', [], ['class' => 'btn btn-success']) !!}
 </div>
 <div class="col-12 table-responsive-sm">
 	<table class="table table-striped">
@@ -16,19 +16,23 @@
       <th scope="col">Client</th>
       <th scope="col">Commercial</th>
       <th scope="col">Modifier le projet</th>
-      <th scope="col">Supprimer le supprimer</th>
+      <th scope="col">Supprimer le projet</th>
     </tr>
   </thead>
   <tbody>
     @foreach ($projets as $projet)
+    <?php 
+    $commercial = DB::table('commerciaux')->where('id', '=', $projet->idCommercial)->first();
+    $client = DB::table('clients')->where('id', '=', $projet->idClient)->first(); 
+    ?>
     <tr>
       <td scope="row"><?=$projet->nom;?></td>
-      <td scope="row"><?=$projet->idClient;?></td>
-      <td scope="row"><?=$projet->idCommercial;?></td>
-      <td>{!! link_to_route('showprojet', '', [$projet->id], ['class' => 'fas fa-fw fa-pen']) !!}</td>
+      <td scope="row"><?=$client->nom.' '. $client->prenom ;?></td>
+      <td scope="row"><?=$commercial->nom.' '. $commercial->prenom ;?></td>
+      <td>{!! link_to_route('projet.show', '', [$projet->id], ['class' => 'fas fa-fw fa-pen']) !!}</td>
       <td>
-      {!! Form::open(['method' => 'DELETE', 'route' => ['deleteprojet', $projet->id]]) !!}
-        {!! Form::submit('Supprimer', ['class' => 'fas fa-fw fa-trash-alt', 'onclick' => 'return confirm(\'Vraiment supprimer cet utilisateur ?\')']) !!}
+      {!! Form::open(['method' => 'DELETE', 'route' => ['projet.destroy', $projet->id]]) !!}
+        {!! Form::submit('Supprimer', ['class' => '', 'onclick' => 'return confirm(\'Vraiment supprimer ce projet ?\')']) !!}
       {!! Form::close() !!}
     </td>
     </tr>

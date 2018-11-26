@@ -1,54 +1,48 @@
 @extends('layout')
 
 @section('title')
-    Création de la maison
+    Création d'une maison
 @endsection
-
-<?php
-
-$client = new stdClass();
-$client->id=1;
-$client->nom="Dylan";
-$clients[$client->id]=$client->nom;
-$client = new stdClass();
-$client->id=2;
-$client->nom="Arthur";
-$clients[$client->id]=$client->nom;
-
-
-$gamme = new stdClass();
-$gamme->id=1;
-$gamme->nom="Ecologique";
-$gammes[$gamme->id]=$gamme->nom;
-$gamme = new stdClass();
-$gamme->id=2;
-$gamme->nom="Luxe";
-$gammes[$gamme->id]=$gamme->nom;
-?>
 
 @section('content')
 <div class="col-md-12">
-	{!! Form::open(['route' => 'storeMaison']) !!}
-		  <div class="form-group">
-		    <label for="idClient">Nom du client</label>
-		    <select class="form-control" id="idClient" name="idClient">
-		    	<option value="">Choisissez le client</option>
-		    	<?php foreach ($clients as $k => $v) { ?>
-		    		<option value="<?=$k+1;?>"><?=$v;?></option>
-		    	<?php } ?>
-		    </select>
-		  </div>
-		  <!--- Gamme eco ----->
-		  <div class="form-group">
-		    <label for="gamme">Gamme</label>
-		    <select class="form-control" id="gamme" name="gamme">
-		    	<option value="">Choisissez une gamme</option>
+	{!! Form::open(['route' => 'maison.store']) !!}
+	<div class="row">
+		<input type="hidden" class="form-control" id="idProjet" name="idProjet" value="1">
+		<div class="form-group col-md-4">
+		    <label for="idGamme">Gamme de la maison</label>
+		    <select class="form-control" id="idGamme" name="idGamme">
+		    	<option value="">Choisissez la gamme</option>
 		    	<?php foreach ($gammes as $k => $v) { ?>
-		    		<option value="<?=$k+1;?>"><?=$v;?></option>
+		    		<option value="<?=$v->id?>"><?=$v->nom;?></option>
 		    	<?php } ?>
 		    </select>
 		  </div>
-		  {!! Form::submit('Générer mon devis', ['class' => 'btn btn-success pull-right']) !!}
+		<div class="form-group col-md-4">
+		    <label for="nbetages">Nombre d'étages</label>
+			<input type="number" class="form-control" id="nbetages" min="0" step="1" name="nbetages">
+		</div>
+		<div class="form-group col-md-4">
+		    <label for="longueur">Longueur</label>
+			<input type="number" class="form-control" id="longueur" min="0" step="1" name="longueur">
+		</div>
+		<div class="form-group col-md-4">
+		    <label for="largeur">Largeur</label>
+			<input type="number" class="form-control" id="largeur" min="0" step="1" name="largeur">
+		</div>
+		<div class="form-group col-md-4">
+		    <label for="hauteur">Hauteur</label>
+			<input type="number" class="form-control" id="hauteur" min="0" step="1" name="hauteur">
+		</div>
+		<div class="form-group col-md-4">
+		    <label for="hauteurToit">Hauteur du toit</label>
+			<input type="number" class="form-control" id="hauteurToit" min="0" step="1" name="hauteurToit">
+		</div>
+		<div class="form-group col-md-4">
+		  {!! Form::submit('Générer ma maison', ['class' => 'btn btn-success pull-right']) !!}
+		</div>	
+	</div>
 	{!! Form::close() !!}
+
 </div>
 @endsection

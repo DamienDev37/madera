@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\MaisonRepository;
+use DB;
+use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 
@@ -17,49 +19,44 @@ class MaisonController extends Controller
     {
         $this->maisonRepository = $maisonRepository;
     }
-
-    public function index()
-    {
-        $maisons = $this->maisonRepository->getPaginate($this->nbrPerPage);
-        
-        $links = $maisons->render();
-
-        return view('maison.index', compact('maisons', 'links'));
-    }
-
     public function create()
     {
-        return view('create');
+        $gammes = DB::table('gammes')->get();
+        return view('maison.create', compact('gammes'));
     }
 
-    public function store(MaisonCreateRequest $request)
+    public function store(Request $request)
     {
         $maison = $this->maisonRepository->store($request->all());
 
-        return redirect('maisons');
+        return redirect('/maison/'.$maison->id);
     }
 
     public function show($id)
     {
+        $gammes = DB::table('gammes')->get();
+        $finitions = DB::table('finitions')->get();
+        $couvertures = DB::table('couvertures')->get();
+        $isolants = DB::table('isolants')->get();
+        $parepluies = DB::table('parepluies')->get();
+        $produits = DB::table('produits')->get();
         $maison = $this->maisonRepository->getById($id);
-
-        return view('show',  compact('maison'));
+        $gamme = DB::table('gammes')->where('id', '=', $maison->idGamme)->first();
+        return view('maison.show',  compact('maison','gammes','finitions','couvertures','isolants','parepluies','gamme','produits'));
     }
 
     public function edit($id)
     {
         $maison = $this->maisonRepository->getById($id);
 
-        return view('edit',  compact('maison'));
+        return view('maison.edit',  compact('maison'));
     }
 
-    public function update(MaisonUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $this->setAdmin($request);
-
         $this->maisonRepository->update($id, $request->all());
         
-        return redirect('maison')->withOk("L'utilisateur " . $request->input('name') . " a été modifié.");
+        return redirect('/maison/'.$maison->id);
     }
 
     public function destroy($id)

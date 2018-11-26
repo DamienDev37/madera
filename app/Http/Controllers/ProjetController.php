@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Repositories\ProjetRepository;
 use App\Repositories\MaisonRepository;
+use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 
@@ -29,9 +30,6 @@ class ProjetController extends Controller
     public function index()
     {
         $projets = $this->projetRepository->getPaginate($this->nbrPerPage);
-        $commerciaux = DB::table('commerciaux')
-        ->join('projets', 'projets.idCommercial', '=', 'commerciaux.id')
-        ->get();
         $links = $projets->render();
 
         return view('projet.index', compact('projets', 'links'));
@@ -44,8 +42,9 @@ class ProjetController extends Controller
      */
     public function create()
     {
-        
-        
+        $commerciaux = DB::table('commerciaux')->get();
+        $clients = DB::table('clients')->get();
+        return view('projet.create', compact('commerciaux', 'clients'));
     }
 
     /**
@@ -56,15 +55,9 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        $projet = new Projet();
-        $projet->idClient = $request['idClient'];
-        $projet->gamme = $request['gamme'];
-        $projet->idProjet = 1;
-        $projet->products = "1,2,3,4,5,6";
-        $projet->total = 562;
-        $projet->save();
+        $projet = $this->projetRepository->store($request->all());
 
-        return redirect('projet');
+        return redirect('/projet')->withOk("L'utilisateur " . $projet->nom . " a été créé.");
     }
 
     /**
@@ -75,9 +68,8 @@ class ProjetController extends Controller
      */
     public function show($id)
     {
-        
         $maisons = DB::table('maison')->where('idProjet', '=', $id)->get();
-        return view('maison.index',compact('maisons'));
+        return view('projet.show',compact('maisons'));
     }
 
     /**
@@ -100,7 +92,9 @@ class ProjetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->projetRepository->update($id, $request->all());
+        
+        return redirect('projet');
     }
 
     /**
@@ -111,6 +105,8 @@ class ProjetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->projetRepository->destroy($id);
+
+        return redirect()->back();
     }
 }
