@@ -20,3 +20,10 @@ Route::resource('maison', 'MaisonController');
 /*** Le devis ***/
 Route::resource('devis', 'DevisController');
 
+Route::resource('pdf', 'PdfController');
+
+Route::resource('client', 'ClientController');
+
+Route::get('/plancoupe', function () {
+    return view('plancoupe');
+});

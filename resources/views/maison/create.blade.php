@@ -38,6 +38,7 @@
 		    <label for="hauteurToit">Hauteur du toit</label>
 			<input type="number" class="form-control" id="hauteurToit" min="0" step="1" name="hauteurToit">
 		</div>
+		<input type="hidden" name="timestamp" value="<?=time();?>">
 		<div class="form-group col-md-4">
 		  {!! Form::submit('Générer ma maison', ['class' => 'btn btn-success pull-right']) !!}
 		</div>	

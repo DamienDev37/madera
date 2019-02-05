@@ -11,12 +11,7 @@
             <span>Projet</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=url('devis');?>">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Devis</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?=url('users');?>">
+          <a class="nav-link" href="<?=url('client');?>">
             <i class="fas fa-fw fa-user"></i>
             <span>Client</span></a>
         </li>

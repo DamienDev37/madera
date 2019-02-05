@@ -59,21 +59,29 @@
     <div class="col-md-12">
       <h4>Sections</h4>
     </div>
+    <?php $sections = DB::table('composants')->where([
+      ['idMaison', '=', $maison->id],
+      ['idFamille', '=', 1],
+    ])->get();  ?>
     <div class="col-md-12">
       <div class="card-deck" name="wrapSectionProducts">
+        <?php foreach($sections as $k => $v){?>
         <div class="card cardProduct my-3">
           <div class="card-body">
-            <h5 class="card-title">Produit</h5>
-              <select class="form-control" name="sectionProduits[]">
+            <h5 class="card-title">Produit existant</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
                 <option value="" selected>Choisissez un produit</option>
-                <?php foreach ($produits as $k => $v) { ?>
-                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php foreach ($produits as $kk => $vv) { ?>
+                  <option value="<?=$v->id?>" <?php if($vv->id==$v->idProduit){echo'selected';}?> ><?=$vv->typeproduit;?></option>
                 <?php } ?>
               </select>
               <label class="mt-3">Quantité</label>
-              <input type="number" class="form-control" name="sectionQuantite[]" />
+              <input type="number" class="form-control" name="quantite[]" value="<?=$v->quantite;?>" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="1"/>
           </div>
         </div>
+      <?php } ?>
       </div>
       <div class="form-group col-md-12 mt-4">
         <a class="btn btn-success" name="addSectionProduct">Ajouter un produit</a>
@@ -82,21 +90,29 @@
     <div class="col-md-12">
       <h4>Montants</h4>
     </div>
+    <?php $montants = DB::table('composants')->where([
+      ['idMaison', '=', $maison->id],
+      ['idFamille', '=', 2],
+    ])->get();  ?>
     <div class="col-md-12">
       <div class="card-deck" name="wrapMontantProducts">
+        <?php foreach($montants as $k => $v){?>
         <div class="card cardProduct my-3">
           <div class="card-body">
-            <h5 class="card-title">Produit</h5>
-              <select class="form-control" name="montantProduits[]">
+            <h5 class="card-title">Produit existant</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
                 <option value="" selected>Choisissez un produit</option>
-                <?php foreach ($produits as $k => $v) { ?>
-                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php foreach ($produits as $kk => $vv) { ?>
+                  <option value="<?=$v->id?>" <?php if($vv->id==$v->idProduit){echo'selected';}?> ><?=$vv->typeproduit;?></option>
                 <?php } ?>
               </select>
               <label class="mt-3">Quantité</label>
-              <input type="number" class="form-control" name="montantQuantite[]" />
+              <input type="number" class="form-control" name="quantite[]" value="<?=$v->quantite;?>" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="1"/>
           </div>
         </div>
+      <?php } ?>
       </div>
       <div class="form-group col-md-12 mt-4">
         <a class="btn btn-success" name="addMontantProduct">Ajouter un produit</a>
@@ -105,21 +121,29 @@
     <div class="col-md-12">
       <h4>Remplissage entre deux montants</h4>
     </div>
+    <?php $remplis = DB::table('composants')->where([
+      ['idMaison', '=', $maison->id],
+      ['idFamille', '=', 3],
+    ])->get();  ?>
     <div class="col-md-12">
       <div class="card-deck" name="wrapRempliProducts">
+        <?php foreach($remplis as $k => $v){?>
         <div class="card cardProduct my-3">
           <div class="card-body">
-            <h5 class="card-title">Produit</h5>
-              <select class="form-control" name="rempliProduits[]">
+            <h5 class="card-title">Produit existant</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
                 <option value="" selected>Choisissez un produit</option>
-                <?php foreach ($produits as $k => $v) { ?>
-                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php foreach ($produits as $kk => $vv) { ?>
+                  <option value="<?=$v->id?>" <?php if($vv->id==$v->idProduit){echo'selected';}?> ><?=$vv->typeproduit;?></option>
                 <?php } ?>
               </select>
               <label class="mt-3">Quantité</label>
-              <input type="number" class="form-control" name="rempliQuantite[]" />
+              <input type="number" class="form-control" name="quantite[]" value="<?=$v->quantite;?>" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="1"/>
           </div>
         </div>
+      <?php } ?>
       </div>
       <div class="form-group col-md-12 mt-4">
         <a class="btn btn-success" name="addRempliProduct">Ajouter un produit</a>
@@ -129,7 +153,52 @@
       {!! Form::submit('Générer ma maison', ['class' => 'btn btn-success pull-right']) !!}
     </div>  
   </div>
+  
   {!! Form::close() !!}
-
+<div class="card cardProduct cardSectionToDuplicate my-3" style="display:none;">
+          <div class="card-body">
+            <h5 class="card-title">Produit ajouté</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
+                <option value="" selected>Choisissez un produit</option>
+                <?php foreach ($produits as $k => $v) { ?>
+                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php } ?>
+              </select>
+              <label class="mt-3">Quantité</label>
+              <input type="number" class="form-control" name="quantite[]" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="1"/>
+          </div>
+        </div>
+  <div class="card cardProduct cardMontantToDuplicate my-3" style="display:none;">
+          <div class="card-body">
+            <h5 class="card-title">Produit ajouté</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
+                <option value="" selected>Choisissez un produit</option>
+                <?php foreach ($produits as $k => $v) { ?>
+                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php } ?>
+              </select>
+              <label class="mt-3">Quantité</label>
+              <input type="number" class="form-control" name="quantite[]" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="2"/>
+          </div>
+        </div>
+  <div class="card cardProduct cardRempliToDuplicate my-3" style="display:none;">
+          <div class="card-body">
+            <h5 class="card-title">Produit ajouté</h5>
+              <input type="hidden" class="form-control" name="idMaison[]" value="<?=$maison->id;?>" />
+              <select class="form-control" name="idProduit[]">
+                <option value="" selected>Choisissez un produit</option>
+                <?php foreach ($produits as $k => $v) { ?>
+                  <option value="<?=$v->id?>"><?=$v->typeproduit;?></option>
+                <?php } ?>
+              </select>
+              <label class="mt-3">Quantité</label>
+              <input type="number" class="form-control" name="quantite[]" />
+              <input type="hidden" class="form-control" name="idFamille[]" value="3"/>
+          </div>
+        </div>
 </div>
 @endsection

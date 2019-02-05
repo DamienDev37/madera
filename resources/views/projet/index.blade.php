@@ -15,7 +15,7 @@
       <th scope="col">Nom du projet</th>
       <th scope="col">Client</th>
       <th scope="col">Commercial</th>
-      <th scope="col">Modifier le projet</th>
+      <th scope="col">Voir le projet</th>
       <th scope="col">Supprimer le projet</th>
     </tr>
   </thead>
@@ -29,7 +29,7 @@
       <td scope="row"><?=$projet->nom;?></td>
       <td scope="row"><?=$client->nom.' '. $client->prenom ;?></td>
       <td scope="row"><?=$commercial->nom.' '. $commercial->prenom ;?></td>
-      <td>{!! link_to_route('projet.show', '', [$projet->id], ['class' => 'fas fa-fw fa-pen']) !!}</td>
+      <td>{!! link_to_route('projet.show', '', [$projet->id], ['class' => 'fas fa-fw fa-eye']) !!}</td>
       <td>
       {!! Form::open(['method' => 'DELETE', 'route' => ['projet.destroy', $projet->id]]) !!}
         {!! Form::submit('Supprimer', ['class' => '', 'onclick' => 'return confirm(\'Vraiment supprimer ce projet ?\')']) !!}

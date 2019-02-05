@@ -10,5 +10,4 @@ class MaisonRepository extends ResourceRepository
 	{
 		$this->model = $maison;
 	}
-
 }

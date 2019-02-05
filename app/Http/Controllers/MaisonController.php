@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\MaisonRepository;
+use App\Repositories\ComposantRepository;
 use DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -12,12 +13,14 @@ class MaisonController extends Controller
 {
 
     protected $maisonRepository;
+    protected $composantRepository;
 
     protected $nbrPerPage = 32;
 
-    public function __construct(MaisonRepository $maisonRepository)
+    public function __construct(MaisonRepository $maisonRepository,ComposantRepository $composantRepository)
     {
         $this->maisonRepository = $maisonRepository;
+        $this->composantRepository = $composantRepository;
     }
     public function create()
     {
@@ -54,9 +57,17 @@ class MaisonController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->maisonRepository->update($id, $request->all());
+        foreach($request['idProduit'] as $k => $v){
+            $arr = [
+                'idMaison' => $request['idMaison'][$k],
+                'idProduit' => $request['idProduit'][$k],
+                'quantite' => $request['quantite'][$k],
+                'idFamille' => $request['idFamille'][$k],
+            ];
+            $this->composantRepository->store($arr);
+        }
         
-        return redirect('/maison/'.$maison->id);
+        return redirect('/maison/'.$request['idMaison'][0]);
     }
 
     public function destroy($id)
@@ -64,5 +75,9 @@ class MaisonController extends Controller
         $this->maisonRepository->destroy($id);
 
         return redirect()->back();
+    }
+
+    public function planCoupe(){
+        return view('plancoupe');
     }
 }

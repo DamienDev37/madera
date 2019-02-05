@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Maison extends Model
+class Client extends Model
 {
-    protected $table = 'maison';
+    protected $table = 'clients';
 
     public $timestamps = false;
 
@@ -16,7 +16,7 @@ class Maison extends Model
      * @var array
      */
     protected $fillable = [
-        'idProjet', 'nbetages', 'longueur', 'largeur', 'hauteur', 'hauteurToit', 'idGamme','timestamp',
+        'nom', 'prenom', 'email'
     ];
 
     /**

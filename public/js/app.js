@@ -45,19 +45,22 @@ $(document).ready(function(){
     });
     $('[name=addSectionProduct]').on('click',function(e){
       e.preventDefault();
-      var copie = $('.cardProduct:first').clone();
+      var copie = $('.cardSectionToDuplicate:first').clone();
+      copie.css('display','block');
       copie.appendTo('[name=wrapSectionProducts]');
 
     });
     $('[name=addMontantProduct]').on('click',function(e){
       e.preventDefault();
-      var copie = $('.cardProduct:first').clone();
+      var copie = $('.cardMontantToDuplicate:first').clone();
+      copie.css('display','block');
       copie.appendTo('[name=wrapMontantProducts]');
 
     });
     $('[name=addRempliProduct]').on('click',function(e){
       e.preventDefault();
-      var copie = $('.cardProduct:first').clone();
+      var copie = $('.cardRempliToDuplicate:first').clone();
+      copie.css('display','block');
       copie.appendTo('[name=wrapRempliProducts]');
 
     });
