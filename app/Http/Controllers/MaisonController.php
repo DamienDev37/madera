@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -22,12 +22,34 @@ class MaisonController extends Controller
         $this->maisonRepository = $maisonRepository;
         $this->composantRepository = $composantRepository;
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $gammes = DB::table('gammes')->get();
         return view('maison.create', compact('gammes'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $maison = $this->maisonRepository->store($request->all());
@@ -35,6 +57,12 @@ class MaisonController extends Controller
         return redirect('/maison/'.$maison->id);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         $gammes = DB::table('gammes')->get();
@@ -48,13 +76,25 @@ class MaisonController extends Controller
         return view('maison.show',  compact('maison','gammes','finitions','couvertures','isolants','parepluies','gamme','produits'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $maison = $this->maisonRepository->getById($id);
-
         return view('maison.edit',  compact('maison'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         foreach($request['idProduit'] as $k => $v){
@@ -66,14 +106,18 @@ class MaisonController extends Controller
             ];
             $this->composantRepository->store($arr);
         }
-        
         return redirect('/maison/'.$request['idMaison'][0]);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $this->maisonRepository->destroy($id);
-
         return redirect()->back();
     }
 

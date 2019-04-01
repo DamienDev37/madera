@@ -27,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\DevisRepository',
         'App\Repositories\MaisonRepository',
         'App\Repositories\ProjetRepository',
-        'App\Repositories\ResourceRepository'
+        'App\Repositories\ClientRepository',
+        'App\Repositories\ComposantRepository'
     );
     }
 }
